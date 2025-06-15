@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.util.Cache;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,10 @@ public class MainController {
 
     private final Cache cache = new Cache();
 
-    @GetMapping("/products")
-    public ResponseEntity<String> reroute() throws IOException, InterruptedException {
+    @GetMapping("/**")
+    public ResponseEntity<String> reroute(HttpServletRequest request) throws IOException, InterruptedException {
         String baseUrl = "https://dummyjson.com";
-        String url = baseUrl + "/products";
+        String url = baseUrl + request.getRequestURI();
         return cache.check(url);
 
     }
